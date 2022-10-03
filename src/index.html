@@ -7,8 +7,31 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="app.js" type="module" defer></script>
   <title>Watch list</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  
+<body class="text-white font-[Inter]">
+  <header class="bg-header flex px-8 p-20 items-center justify-between">
+    <h1 class="text-5xl font-bold">Find your film</h1>
+    <a class="" href="#">My Watchlist</a>
+  </header>
+  <main class="">
+    <div class="flex justify-center mt-[-1.3rem]">
+      <div class="max-w-[100%] bg-white flex text-gray-900 border rounded drop-shadow">
+        <div class="flex-auto flex px-2 rounded-l-lg">
+          <label for="search">
+            <svg class="p-4" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="fill-gray-500" fill-rule="evenodd" clip-rule="evenodd" d="M18.75 6.25C11.8464 6.25 6.25 11.8464 6.25 18.75C6.25 25.6536 11.8464 31.25 18.75 31.25C25.6536 31.25 31.25 25.6536 31.25 18.75C31.25 11.8464 25.6536 6.25 18.75 6.25ZM0 18.75C0 8.39466 8.39466 0 18.75 0C29.1053 0 37.5 8.39466 37.5 18.75C37.5 22.7995 36.2163 26.5491 34.0336 29.6142L49.0847 44.6653C50.3051 45.8857 50.3051 47.8643 49.0847 49.0847C47.8643 50.3051 45.8857 50.3051 44.6653 49.0847L29.6142 34.0336C26.5491 36.2163 22.7995 37.5 18.75 37.5C8.39466 37.5 0 29.1053 0 18.75Z"/>
+            </svg>
+          </label>
+          <input id="search" type="text" placeholder="Search for a movie">
+        </div>
+        <button class="px-16 py-2 rounded-r  border-l bg-gray-100">Search</button>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
 </body>
 </html>
