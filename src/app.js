@@ -1,15 +1,22 @@
 import MovieComponent from "./components/MovieComponent.js";
+import StartComponent from "./components/StartComponent.js";
 import { BASE_URL_MOVIES } from "./utils/constants.js";
-import { div_mount } from "./view.js";
+import { div_mount, input_search } from "./view.js";
 const key = "4d0b81f2";
 
 class app{
   constructor(){
+    this.listeners();
     this.initialDisplay();
   }
 
-  async initialDisplay(){
+  initialDisplay(){
+    div_mount.innerHTML = StartComponent();
+  }
+  
+  async displayMovies(){
     const movies = await this.getThisYearMovies();
+    console.log(movies)
     const moviesHtml = movies.map(movie => MovieComponent(movie)).join('');
     div_mount.innerHTML = `<div class="flex flex-col gap-6 overflow-scroll">${moviesHtml}</div>` 
   }
@@ -18,6 +25,7 @@ class app{
     const response = await fetch(`${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`)
     const data = await response.json();
     console.log({data})
+    return data 
   }
 
   async getThisYearMovies(){
@@ -28,6 +36,17 @@ class app{
     const data = await response.json();
     return data.Search;
   }
+
+  listeners(){
+    document.addEventListener('click', async event =>{
+      const {target} = event
+      console.log('click')
+      if(target.matches('#find')){
+        const movie = await this.getMovieByTitle(input_search.value)
+        div_mount.innerHTML = MovieComponent(movie)
+      }
+    })
+  } 
 }
 
 new app();

@@ -1,18 +1,20 @@
 export default function MovieComponent(movie){
+  console.log({movie})
+  const {Title, Poster, Plot, imdbRating, Genre, Runtime} = movie;
   return `
   <div class="flex w-[50rem] text-black">
-            <img class="w-[10rem] h-[15rem]" src="https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg5YzYtYThlMGVjNzE1OGViXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg" alt="poster">
+            <img class="min-w-[10rem] w-[10rem]  h-[15rem] object-cover" src="${Poster}" alt="${Title}">
             <div class="flex flex-col gap-4 p-6">
               <div class="flex gap-2">
-                <h2 class="text-xl">Blade Runner</h2>
+                <h2 class="text-xl capitalize">${Title}</h2>
                 <div class="flex gap-1 items-center">
                   <img class="w-4 h-4" src="../assets/icon-star.svg" alt="star">
-                  <p>8.1</p>
+                  <p>${imdbRating}</p>
                 </div>
               </div>
               <div class="flex gap-8">
-                <p>117 min</p>
-                <p>Action, Drama, Sci-fi</p>
+                <p>${Runtime}</p>
+                <p>${Genre}</p>
                 <div class="flex items-center gap-2">
                   <button id="add-to-watchlist">
                     <svg class="h-5 w-5" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +24,7 @@ export default function MovieComponent(movie){
                   <label for="add-to-watchlist">Watchlist</label>
                 </div>
               </div>
-              <p class=" text-gray-600">A blade runner must pursue and terminate four replicants who stole a ship in space, and have returned to Earth to find their creator.</p>
+              <p class=" text-gray-600">${Plot}</p>
             </div>
           </div>
   `
