@@ -1,0 +1,1 @@
+export const div_mount = document.querySelector('#mount')
