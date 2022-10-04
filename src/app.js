@@ -1,4 +1,5 @@
 import MovieComponent from "./components/MovieComponent.js";
+import NotFound from "./components/NotFound.js";
 import StartComponent from "./components/StartComponent.js";
 import { BASE_URL_MOVIES } from "./utils/constants.js";
 import { div_mount, input_search } from "./view.js";
@@ -22,9 +23,10 @@ class app{
   }
 
   async getMovieByTitle(title){
-    const response = await fetch(`${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`)
+    const url = `${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`
+    console.log(url)
+    const response = await fetch(url)
     const data = await response.json();
-    console.log({data})
     return data 
   }
 
@@ -37,13 +39,29 @@ class app{
     return data.Search;
   }
 
+  async findMovie(){
+    const movie = await this.getMovieByTitle(input_search.value)
+    div_mount.innerHTML = movie.Response === 'True' ? MovieComponent(movie) : NotFound();
+  }
+
   listeners(){
     document.addEventListener('click', async event =>{
       const {target} = event
-      console.log('click')
       if(target.matches('#find')){
-        const movie = await this.getMovieByTitle(input_search.value)
-        div_mount.innerHTML = MovieComponent(movie)
+        await this.findMovie();  
+      }
+    })
+    input_search.addEventListener('keypress', async event =>{
+      const {target, key} = event
+      console.log({target, key})
+      if(target.matches('#search') && key === 'Enter'){
+        await this.findMovie();
+      }
+    })
+    document.addEventListener('input', event => {
+      const {target} = event;
+      if(target === input_search){
+        if(input_search.value === '') div_mount.innerHTML = StartComponent(); 
       }
     })
   } 

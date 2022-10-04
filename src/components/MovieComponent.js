@@ -3,7 +3,13 @@ export default function MovieComponent(movie){
   const {Title, Poster, Plot, imdbRating, Genre, Runtime} = movie;
   return `
   <div class="flex w-[50rem] text-black">
-            <img class="min-w-[10rem] w-[10rem]  h-[15rem] object-cover" src="${Poster}" alt="${Title}">
+            ${Poster !== 'N/A' ?
+              `<img class="min-w-[10rem] w-[10rem]  h-[15rem] object-cover" src="${Poster}" alt="${Title}">`
+              :
+              `<div class="min-w-[10rem] w-[10rem] text-gray-700 flex justify-center items-center bg-gray-300 rounded h-[15rem]">
+                <p>No poster</p>
+              </div>`
+            }
             <div class="flex flex-col gap-4 p-6">
               <div class="flex gap-2">
                 <h2 class="text-xl capitalize">${Title}</h2>
