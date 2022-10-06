@@ -31,7 +31,7 @@ async function getMovieByTitle(title){
 }
 
 function initialDisplay(){
-  const header = {title: "Find your film", link: {text: "my watchlist", href:"#"}};
+  const header = {title: "Find your film", link: {text: "my watchlist", href:"#watchlist"}};
   view.innerHTML = 
   `
   ${HeaderComponent(header)}
