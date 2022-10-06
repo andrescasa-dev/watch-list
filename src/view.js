@@ -1,2 +1,1 @@
-export const div_mount = document.querySelector('#mount')
-export const input_search = document.querySelector('#search')
+export const view = document.querySelector('#router-outlet');

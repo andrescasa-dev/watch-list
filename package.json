@@ -1,0 +1,23 @@
+{
+  "name": "movie-watchlist",
+  "version": "1.0.0",
+  "description": "[design](https://www.figma.com/file/jhFRdFIdHpRxsDznNXtpXw/Movie-Watchlist) provided by [Scrimba](https://scrimba.com/learn/frontend/solo-project-movie-watchlist-co0a24985872b20458f37bc22)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrescasa-dev/watch-list.git"
+  },
+  "keywords": [],
+  "author": "AndresCasa_dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrescasa-dev/watch-list/issues"
+  },
+  "homepage": "https://github.com/andrescasa-dev/watch-list#readme",
+  "dependencies": {
+    "navigo": "^8.11.1"
+  }
+}

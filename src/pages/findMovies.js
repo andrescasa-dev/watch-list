@@ -1,0 +1,67 @@
+import SearchBarComponent from "../components/SearchBarComponent.js"; 
+import { view } from "../view.js";
+import MovieComponent from "../components/MovieComponent.js";
+import NotFound from "../components/NotFound.js";
+import StartComponent from "../components/StartComponent.js";
+import { BASE_URL_MOVIES } from "../utils/constants.js";
+import HeaderComponent from "../components/HeaderComponent.js";
+
+const key = "4d0b81f2";
+let div_mount;
+
+export default async function findMovie(){
+  initialDisplay();
+  listeners();
+}
+
+async function displayMovieFound(){
+  const title = document.querySelector('#search').value;
+  if(title !== ''){
+    const movie = await getMovieByTitle(title)
+    div_mount.innerHTML = movie.Response === 'True' ? MovieComponent(movie) : NotFound();
+  }
+} 
+
+async function getMovieByTitle(title){
+  const url = `${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`
+  console.log(url)
+  const response = await fetch(url)
+  const data = await response.json();
+  return data 
+}
+
+function initialDisplay(){
+  const header = {title: "Find your film", link: {text: "my watchlist", href:"#"}};
+  view.innerHTML = 
+  `
+  ${HeaderComponent(header)}
+  <main class="flex flex-col grow relative ">
+    ${SearchBarComponent()}
+    <div id="mount" class="grow p-16 flex"></div>
+  </main>`
+  div_mount = document.querySelector('#mount')
+  div_mount.innerHTML = StartComponent();
+}
+
+function listeners(){
+  const input_search = document.querySelector('#search');
+  document.addEventListener('click', async event =>{
+    const {target} = event
+    if(target.matches('#find')){
+      await displayMovieFound();  
+    }
+  })
+  input_search.addEventListener('keypress', async event =>{
+    const {target, key} = event
+    console.log({target, key})
+    if(target.matches('#search') && key === 'Enter'){
+      await displayMovieFound();
+    }
+  })
+  document.addEventListener('input', event => {
+    const {target} = event;
+    if(target === input_search){
+      if(input_search.value === '') div_mount.innerHTML = StartComponent(); 
+    }
+  })
+}
