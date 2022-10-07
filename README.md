@@ -3,3 +3,10 @@
 
 # API
 app powered by [open movie api](https://www.omdbapi.com/)
+
+# To Do
+- [ ] Make "add to watchlist" works 
+  - [x] select the movie that the user wants to save 
+  - [x] save each movie in the local storage
+  - [ ] displayed it in the watchlist
+- [ ] Improve the search to show all the responses.

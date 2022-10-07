@@ -5,6 +5,7 @@ import NotFound from "../components/NotFound.js";
 import StartComponent from "../components/StartComponent.js";
 import { BASE_URL_MOVIES } from "../utils/constants.js";
 import HeaderComponent from "../components/HeaderComponent.js";
+import { reviver } from "../utils/functions.js";
 
 const key = "4d0b81f2";
 let div_mount;
@@ -17,10 +18,22 @@ export default async function findMovie(){
 async function displayMovieFound(){
   const title = document.querySelector('#search').value;
   if(title !== ''){
-    const movie = await getMovieByTitle(title)
-    div_mount.innerHTML = movie.Response === 'True' ? MovieComponent(movie) : NotFound();
+    const movie = await getMovieByTitle(title);
+    if(movie.Response === 'True'){
+      div_mount.innerHTML = MovieComponent(movie)
+    }
+    else{
+      div_mount.innerHTML = NotFound()
+    }
   }
-} 
+}
+
+function saveInLocalStorage(movie){
+  const userWatchlist = JSON.parse(window.localStorage.getItem('userWatchlist') || '{}')
+  userWatchlist[movie.Title.replace(' ','')] = {...movie} 
+  window.localStorage.setItem('userWatchlist', JSON.stringify(userWatchlist))
+  console.log(JSON.parse(window.localStorage.getItem('userWatchlist')))
+}
 
 async function getMovieByTitle(title){
   const url = `${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`
@@ -50,6 +63,11 @@ function listeners(){
     if(target.matches('#find')){
       await displayMovieFound();  
     }
+    if(target.matches('#add-to-watchlist')){
+      const movie = JSON.parse(target.dataset.movie, reviver);
+      saveInLocalStorage(movie)
+    }
+    
   })
   input_search.addEventListener('keypress', async event =>{
     const {target, key} = event
