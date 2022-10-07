@@ -1,6 +1,6 @@
 export default function EmptyWatchlist(){
   return `
-  <div class="flex justify-center items-center w-full">
+  <div class="grow flex justify-center items-center w-full">
     <div class="flex flex-col gap-4 justify-center items-center">
       <p class="text-gray-300 font-bold">Your watchlist is looking a little empty...</p>
       <a class="text-gray-900 font-bold flex gap-2 items-center" href="#">

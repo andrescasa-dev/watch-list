@@ -1,21 +1,19 @@
+import { RemoveFromLocalStorage, reviver, saveInLocalStorage } from "./utils/functions.js";
+
 export default function listeners(){
-  document.addEventListener('click', async event =>{
+  document.addEventListener('click', event =>{
     const {target} = event
-    if(target.matches('#find')){
-      await this.findMovie();  
+    if(target.closest('#add-to-watchlist')){
+      const button = target.closest('#add-to-watchlist');
+      const movie = JSON.parse(button.dataset.movie, reviver);
+      saveInLocalStorage(movie)
     }
-  })
-  input_search.addEventListener('keypress', async event =>{
-    const {target, key} = event
-    console.log({target, key})
-    if(target.matches('#search') && key === 'Enter'){
-      await this.findMovie();
-    }
-  })
-  document.addEventListener('input', event => {
-    const {target} = event;
-    if(target === input_search){
-      if(input_search.value === '') div_mount.innerHTML = StartComponent(); 
+
+    if(target.closest('#remove-from-watchlist')){
+      const button = target.closest('#remove-from-watchlist');
+      const movie = JSON.parse(button.dataset.movie, reviver);
+      console.log('remove: '+{movie})
+      RemoveFromLocalStorage(movie);
     }
   })
 }
