@@ -16,7 +16,7 @@ export default async function findMovie(){
   ${HeaderComponent(header)}
   <main class="flex flex-col grow relative ">
     ${SearchBarComponent()}
-    <div id="mount" class="grow p-16 flex"></div>
+    <div id="mount" class="grow p-16 flex flex-col gap-4"></div>
   </main>`
   div_mount = document.querySelector('#mount')
   div_mount.innerHTML = StartComponent();
@@ -25,11 +25,13 @@ export default async function findMovie(){
 }
 
 export async function displayMovieFound(){
-  const title = document.querySelector('#search').value;
-  if(title !== ''){
-    const movie = await getMovieByTitle(title);
-    if(movie.Response === 'True'){
-      div_mount.innerHTML = MovieComponent(movie)
+  const searchText = document.querySelector('#search').value;
+  if(searchText !== ''){
+    const search = await getSearch(searchText, 1);
+    if(search.Response === 'True'){
+      const movies = await Promise.all(search.Search.map(async movieData => await getMovieByID(movieData.imdbID)));
+      const MoviesHTML = movies.map(movie => MovieComponent(movie)).join('');
+      div_mount.innerHTML = MoviesHTML;
     }
     else{
       div_mount.innerHTML = NotFound()
@@ -37,20 +39,19 @@ export async function displayMovieFound(){
   }
 }
 
-async function getMovieByTitle(title){
-  const url = `${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`
+async function getMovieByID(id){
+  const url = `${BASE_URL_MOVIES}/?i=${id}&apikey=${key}`
   console.log(url)
   const response = await fetch(url)
   const data = await response.json();
   return data 
 }
 
-async function getSearch(title, page){
-  const url = `${BASE_URL_MOVIES}/?s=${title}&page=${page}&apikey=${key}`
+async function getSearch(searchText, page){
+  const url = `${BASE_URL_MOVIES}/?s=${searchText}&page=${page}&apikey=${key}`
   const response = await fetch(url)
   const data = await response.json();
-  const {Search} = data
-  return Search;
+  return data;
 }
 
 function listeners(){

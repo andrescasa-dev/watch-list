@@ -5,7 +5,4 @@
 app powered by [open movie api](https://www.omdbapi.com/)
 
 # To Do
-- [ ] Remove from watchlist
-  - [ ] change the svg to "remove icon"
-  - [ ] delete it from the local storage
-- [ ] Improve the search to show all the responses.
+- [ ] set the movieCard element id to the id from the api
