@@ -14,7 +14,7 @@ export default async function findMovie(){
   listeners();
 }
 
-async function displayMovieFound(){
+export async function displayMovieFound(){
   const title = document.querySelector('#search').value;
   if(title !== ''){
     const movie = await getMovieByTitle(title);
