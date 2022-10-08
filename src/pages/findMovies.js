@@ -29,7 +29,11 @@ export async function displayMovieFound(){
   if(searchText !== ''){
     const search = await getSearch(searchText, 1);
     if(search.Response === 'True'){
-      const movies = await Promise.all(search.Search.map(async movieData => await getMovieByID(movieData.imdbID)));
+      const movies = await Promise.all(search.Search.map(async movieData => {
+          const movie =  await getMovieByID(movieData.imdbID)
+          return {...movie, id: movieData.imdbID}
+        }
+      ));
       const MoviesHTML = movies.map(movie => MovieComponent(movie)).join('');
       div_mount.innerHTML = MoviesHTML;
     }
