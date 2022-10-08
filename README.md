@@ -5,4 +5,4 @@
 app powered by [open movie api](https://www.omdbapi.com/)
 
 # To Do
-- [ ] set the movieCard element id to the id from the api
+- [ ] add the possibility of go to the next page in the search

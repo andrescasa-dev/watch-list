@@ -15,18 +15,20 @@ export default async function findMovie(){
   `
   ${HeaderComponent(header)}
   <main class="flex flex-col grow relative ">
-    ${SearchBarComponent()}
+    ${SearchBarComponent(window.localStorage.getItem('searchText'))}
     <div id="mount" class="grow p-16 flex flex-col gap-4"></div>
   </main>`
   div_mount = document.querySelector('#mount')
   div_mount.innerHTML = StartComponent();
 
+  displayMovieFound();
   listeners();
 }
 
 export async function displayMovieFound(){
   const searchText = document.querySelector('#search').value;
   if(searchText !== ''){
+    window.localStorage.setItem('searchText', searchText)
     const search = await getSearch(searchText, 1);
     if(search.Response === 'True'){
       const movies = await Promise.all(search.Search.map(async movieData => {

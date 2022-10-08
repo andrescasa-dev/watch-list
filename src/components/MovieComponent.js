@@ -1,8 +1,8 @@
 import { replacer} from "../utils/functions.js";
 
 export default function MovieComponent(movie){
-  const {Title, Poster, Plot, imdbRating, Genre, Runtime, id} = movie;
-  const thisMovie =  {Title, Poster, Plot, imdbRating, Genre, Runtime, id}
+  const {Title, Poster, Plot, imdbRating, Genre, Runtime, id, Year} = movie;
+  const thisMovie =  {Title, Poster, Plot, imdbRating, Genre, Runtime, id, Year}
   const userWatchlist = JSON.parse(window.localStorage.getItem('userWatchlist') || '{}')
   const addIcon = 
   `
@@ -25,7 +25,7 @@ export default function MovieComponent(movie){
                 <p>No poster</p>
               </div>`
             }
-            <div class="flex flex-col gap-4 p-6">
+            <div class="grow flex flex-col gap-4 p-6">
               <div class="flex gap-2">
                 <h2 class="text-xl capitalize">${Title}</h2>
                 <div class="flex gap-1 items-center">
@@ -34,9 +34,10 @@ export default function MovieComponent(movie){
                 </div>
               </div>
               <div class="flex gap-8">
-                <p>${Runtime}</p>
-                <p>${Genre}</p>
-                <div class="flex items-center gap-2">
+                <p class="bg-blue-200 rounded px-1">${Runtime}</p>
+                <p class="bg-orange-200 rounded px-1">${Genre}</p>
+                <p class="bg-red-200 rounded px-1">${Year}</p>
+                <div class="grow flex items-center justify-end gap-2">
                   <button class="flex gap-2 items-center" id="${userWatchlist[id] ? 'remove-from-watchlist' : 'add-to-watchlist'}" data-movie='${JSON.stringify(thisMovie, replacer)}'>
                     <label class="cursor-pointer" for="add-to-watchlist"> 
                       ${ userWatchlist[id] ? removeIcon : addIcon}
