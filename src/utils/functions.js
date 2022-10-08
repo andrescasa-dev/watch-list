@@ -24,3 +24,17 @@ export function RemoveFromLocalStorage(movie){
   userWatchlist[movie.id] = undefined
   window.localStorage.setItem('userWatchlist', JSON.stringify(userWatchlist))
 }
+
+class ArrowHandler{
+  constructor(){
+    this.actualPage = 1
+  }
+  next(){
+    this.actualPage++
+  }
+  prev(){
+    this.actualPage -= this.actualPage > 1 ? 1 : 0
+  }
+}
+
+export const arrowHandler = new ArrowHandler();

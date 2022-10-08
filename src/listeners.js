@@ -1,6 +1,7 @@
 import MovieComponent from "./components/MovieComponent.js";
+import { displayMovieFound } from "./pages/findMovies.js";
 import { watchlistHTML } from "./pages/watchlist.js";
-import { RemoveFromLocalStorage, reviver, saveInLocalStorage } from "./utils/functions.js";
+import { arrowHandler, RemoveFromLocalStorage, reviver, saveInLocalStorage } from "./utils/functions.js";
 
 export default function listeners(){
   document.addEventListener('click', async event =>{
@@ -25,6 +26,14 @@ export default function listeners(){
       else{
         document.querySelector(`#${movie.id}`).outerHTML = MovieComponent(movie);
       }
+    }
+    if(target.matches('#btn_prev')){
+      arrowHandler.prev();
+      await displayMovieFound()
+    }
+    if(target.matches('#btn_next')){
+      arrowHandler.next();
+      await displayMovieFound()
     }
   })
 }

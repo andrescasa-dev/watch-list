@@ -5,6 +5,8 @@ import NotFound from "../components/NotFound.js";
 import StartComponent from "../components/StartComponent.js";
 import { BASE_URL_MOVIES } from "../utils/constants.js";
 import HeaderComponent from "../components/HeaderComponent.js";
+import ArrowsComponent from "../components/ArrowsComponent.js";
+import { arrowHandler } from "../utils/functions.js";
 
 const key = "4d0b81f2";
 let div_mount;
@@ -15,8 +17,9 @@ export default async function findMovie(){
   `
   ${HeaderComponent(header)}
   <main class="flex flex-col grow relative ">
-    ${SearchBarComponent(window.localStorage.getItem('searchText'))}
+    ${SearchBarComponent(window.localStorage.getItem('searchText') || 'Dune')}
     <div id="mount" class="grow p-16 flex flex-col gap-4"></div>
+    ${ArrowsComponent()}
   </main>`
   div_mount = document.querySelector('#mount')
   div_mount.innerHTML = StartComponent();
@@ -29,7 +32,7 @@ export async function displayMovieFound(){
   const searchText = document.querySelector('#search').value;
   if(searchText !== ''){
     window.localStorage.setItem('searchText', searchText)
-    const search = await getSearch(searchText, 1);
+    const search = await getSearch(searchText, arrowHandler.actualPage);
     if(search.Response === 'True'){
       const movies = await Promise.all(search.Search.map(async movieData => {
           const movie =  await getMovieByID(movieData.imdbID)
@@ -47,7 +50,6 @@ export async function displayMovieFound(){
 
 async function getMovieByID(id){
   const url = `${BASE_URL_MOVIES}/?i=${id}&apikey=${key}`
-  console.log(url)
   const response = await fetch(url)
   const data = await response.json();
   return data 
@@ -70,7 +72,6 @@ function listeners(){
   })
   input_search.addEventListener('keypress', async event =>{
     const {target, key} = event
-    console.log({target, key})
     if(target.matches('#search') && key === 'Enter'){
       await displayMovieFound();
     }
