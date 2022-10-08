@@ -12,15 +12,19 @@ export const reviver = (key, value) => {
   return value;
 }
 
+export const sanitizeTitle = (title) => {
+  return title.replaceAll(/\W+/g, '')
+}
+
 export function saveInLocalStorage(movie){
   const userWatchlist = JSON.parse(window.localStorage.getItem('userWatchlist') || '{}')
-  userWatchlist[movie.Title.replace(' ','')] = {...movie} 
+  userWatchlist[sanitizeTitle(movie.Title)] = {...movie} 
   window.localStorage.setItem('userWatchlist', JSON.stringify(userWatchlist))
 }
 
 
 export function RemoveFromLocalStorage(movie){
   const userWatchlist = JSON.parse(window.localStorage.getItem('userWatchlist') || '{}')
-  userWatchlist[movie.Title.replace(' ','')] = undefined
+  userWatchlist[sanitizeTitle(movie.Title)] = undefined
   window.localStorage.setItem('userWatchlist', JSON.stringify(userWatchlist))
 }

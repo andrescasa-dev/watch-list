@@ -10,7 +10,17 @@ const key = "4d0b81f2";
 let div_mount;
 
 export default async function findMovie(){
-  initialDisplay();
+  const header = {title: "Find your film", link: {text: "my watchlist", href:"#watchlist"}};
+  view.innerHTML = 
+  `
+  ${HeaderComponent(header)}
+  <main class="flex flex-col grow relative ">
+    ${SearchBarComponent()}
+    <div id="mount" class="grow p-16 flex"></div>
+  </main>`
+  div_mount = document.querySelector('#mount')
+  div_mount.innerHTML = StartComponent();
+
   listeners();
 }
 
@@ -27,8 +37,6 @@ export async function displayMovieFound(){
   }
 }
 
-
-
 async function getMovieByTitle(title){
   const url = `${BASE_URL_MOVIES}/?t=${title}&apikey=${key}`
   console.log(url)
@@ -37,17 +45,12 @@ async function getMovieByTitle(title){
   return data 
 }
 
-function initialDisplay(){
-  const header = {title: "Find your film", link: {text: "my watchlist", href:"#watchlist"}};
-  view.innerHTML = 
-  `
-  ${HeaderComponent(header)}
-  <main class="flex flex-col grow relative ">
-    ${SearchBarComponent()}
-    <div id="mount" class="grow p-16 flex"></div>
-  </main>`
-  div_mount = document.querySelector('#mount')
-  div_mount.innerHTML = StartComponent();
+async function getSearch(title, page){
+  const url = `${BASE_URL_MOVIES}/?s=${title}&page=${page}&apikey=${key}`
+  const response = await fetch(url)
+  const data = await response.json();
+  const {Search} = data
+  return Search;
 }
 
 function listeners(){

@@ -1,7 +1,6 @@
 import MovieComponent from "./components/MovieComponent.js";
-import { displayMovieFound } from "./pages/findMovies.js";
 import { watchlistHTML } from "./pages/watchlist.js";
-import { RemoveFromLocalStorage, reviver, saveInLocalStorage } from "./utils/functions.js";
+import { RemoveFromLocalStorage, reviver, sanitizeTitle, saveInLocalStorage } from "./utils/functions.js";
 
 export default function listeners(){
   document.addEventListener('click', async event =>{
@@ -10,9 +9,11 @@ export default function listeners(){
       event.preventDefault();
       const button = target.closest('#add-to-watchlist');
       const movie = JSON.parse(button.dataset.movie, reviver);
-      console.log('add: '+ movie.Title.replaceAll(' ',''))
+      const sanitizedTitle = sanitizeTitle(movie.Title);
+      console.log('add: '+ movie.Title)
       saveInLocalStorage(movie)
-      document.querySelector(`#${movie.Title.replaceAll(' ','')}`).outerHTML = MovieComponent(movie);
+      console.log({sanitizedTitle});
+      document.querySelector(`#${sanitizedTitle}`).outerHTML = MovieComponent(movie);
     }
 
     if(target.closest('#remove-from-watchlist')){
@@ -20,14 +21,15 @@ export default function listeners(){
       const watchlistEM = document.querySelector('#watchlist')
       const button = target.closest('#remove-from-watchlist');
       const movie = JSON.parse(button.dataset.movie, reviver);
-      console.log('remove: '+ movie.Title.replaceAll(' ',''))
+      const sanitizedTitle = sanitizeTitle(movie.Title);
+      console.log('remove: '+ movie.Title)
       RemoveFromLocalStorage(movie);
       
       if(watchlistEM){
         watchlistEM.innerHTML = watchlistHTML();
       }
       else{
-        document.querySelector(`#${movie.Title.replaceAll(' ','')}`).outerHTML = MovieComponent(movie);
+        document.querySelector(`#${sanitizedTitle}`).outerHTML = MovieComponent(movie);
       }
     }
   })
