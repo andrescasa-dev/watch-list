@@ -13,7 +13,7 @@ const DEFAULT_SEARCH_VALUE = 'Dune'
 let div_mount;
 
 export default async function findMovie(){
-  const header = {title: "Find your film", link: {text: "my watchlist", href:"#watchlist"}};
+  const header = {title: "Find your film", link: {text: "go to watchlist", href:"#watchlist"}};
   view.innerHTML = 
   `
   ${HeaderComponent(header)}
