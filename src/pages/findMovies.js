@@ -9,6 +9,7 @@ import ArrowsComponent from "../components/ArrowsComponent.js";
 import { arrowHandler } from "../utils/functions.js";
 
 const key = "4d0b81f2";
+const DEFAULT_SEARCH_VALUE = 'Dune'
 let div_mount;
 
 export default async function findMovie(){
@@ -17,12 +18,11 @@ export default async function findMovie(){
   `
   ${HeaderComponent(header)}
   <main class="flex flex-col grow relative ">
-    ${SearchBarComponent(window.localStorage.getItem('searchText') || 'Dune')}
+    ${SearchBarComponent(window.localStorage.getItem('searchText') || DEFAULT_SEARCH_VALUE)}
     <div id="mount" class="grow p-16 flex flex-col gap-4"></div>
     ${ArrowsComponent()}
   </main>`
   div_mount = document.querySelector('#mount')
-  div_mount.innerHTML = StartComponent();
 
   displayMovieFound();
   listeners();
