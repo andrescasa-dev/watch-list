@@ -1,6 +1,6 @@
-export default function SearchBarComponent(searchText){
+export default function SearchBarComponent(searchText) {
   return `
-  <div class="absolute mt-[-1.6rem] inset-x-0 max-w-[60%] w-full min-w-min m-auto  bg-white flex text-gray-900 border rounded drop-shadow">
+  <div class="absolute mt-[-1.6rem] inset-x-0 max-w-[60%] w-full min-w-min m-auto bg-white flex sm:flex-row flex-col text-gray-900 border rounded drop-shadow">
     <div class="flex-auto flex px-2 rounded-l-lg">
       <label for="search">
         <svg class="p-4" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
